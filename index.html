@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghana Scam Numbers Directory | Report & Verify</title>
+    <meta name="description" content="A public directory of phone numbers used for scams, phishing, and impersonation in Ghana. Protect yourself from Mobile Money fraud and fake DVLA links.">
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Phosphor Icons) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow red"></div>
+        <div class="glow blue"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="ph-fill ph-shield-warning text-danger"></i>
+                <h1>Scam<span class="text-light">Watch</span> GH</h1>
+            </div>
+            <nav>
+                <a href="#directory" class="nav-link">Directory</a>
+                <a href="#report" class="btn btn-outline">Report a Number</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container text-center">
+                <div class="badge-alert">
+                    <span class="pulse-dot"></span>
+                    Live Community Database
+                </div>
+                <h2 class="hero-title">Protect Yourself Against <br><span class="text-gradient">Digital Fraud in Ghana</span></h2>
+                <p class="hero-subtitle">
+                    A centralized public directory of phone numbers actively used by scammers to send phishing links (DVLA) and perform Mobile Money (MTN/Telecel) social engineering.
+                </p>
+                
+                <div class="search-container glass-panel">
+                    <i class="ph ph-magnifying-glass search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search by phone number, category, or modus operandi..." autocomplete="off">
+                    <button id="searchBtn" class="btn btn-primary">Verify Number</button>
+                </div>
+
+                <div class="quick-filters">
+                    <span class="filter-label">Popular filters:</span>
+                    <button class="filter-pill active" data-filter="all">All</button>
+                    <button class="filter-pill" data-filter="momo">MoMo Fraud</button>
+                    <button class="filter-pill" data-filter="phishing">Phishing Links</button>
+                    <button class="filter-pill" data-filter="impersonation">Impersonation</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-bar glass-panel-flat">
+            <div class="container stats-grid">
+                <div class="stat-item">
+                    <i class="ph-fill ph-warning-circle text-danger"></i>
+                    <div class="stat-info">
+                        <span class="stat-value" id="totalNumbers">0</span>
+                        <span class="stat-label">Reported Numbers</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="ph-fill ph-folder text-accent"></i>
+                    <div class="stat-info">
+                        <span class="stat-value" id="activeCategories">2</span>
+                        <span class="stat-label">Active Categories</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <i class="ph-fill ph-users text-light"></i>
+                    <div class="stat-info">
+                        <span class="stat-value">Public</span>
+                        <span class="stat-label">Access Level</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Directory Section -->
+        <section id="directory" class="directory-section">
+            <div class="container">
+                <div class="section-header">
+                    <h3>Recent Scam Activity</h3>
+                    <div class="view-controls">
+                        <button class="view-btn active"><i class="ph ph-squares-four"></i></button>
+                        <button class="view-btn"><i class="ph ph-list"></i></button>
+                    </div>
+                </div>
+
+                <div class="scam-grid" id="scamGrid">
+                    <!-- Cards will be dynamically injected here by script.js -->
+                </div>
+                
+                <div id="noResults" class="no-results hidden">
+                    <i class="ph ph-detective"></i>
+                    <h4>No numbers found</h4>
+                    <p>We couldn't find a match for your search. Stay vigilant.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="ph-fill ph-shield-warning text-danger"></i>
+                        <span>Scam<span class="text-light">Watch</span> GH</span>
+                    </div>
+                    <p>Together, we can make the digital space in Ghana safer.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <a href="#">Report to Police</a>
+                    <a href="#">MTN Fraud Desk</a>
+                    <a href="#">Telecel Support</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; <span id="currentYear"></span> ScamWatch GH. A community initiative.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Template for a Scam Card (Hidden) -->
+    <template id="scamCardTemplate">
+        <div class="scam-card glass-panel group">
+            <div class="card-header">
+                <span class="category-badge"></span>
+                <span class="risk-level"><i class="ph-fill ph-fire"></i> High Risk</span>
+            </div>
+            <div class="phone-number-container">
+                <h3 class="phone-number"></h3>
+                <button class="copy-btn" title="Copy Number"><i class="ph ph-copy"></i></button>
+            </div>
+            <div class="mo-section">
+                <h4>Modus Operandi</h4>
+                <p class="mo-text"></p>
+            </div>
+            <div class="evidence-section hidden">
+                <h4>Known Scripts / Messages</h4>
+                <ul class="evidence-list"></ul>
+            </div>
+            <div class="target-tags">
+                <!-- Tags injected here -->
+            </div>
+            <div class="card-footer">
+                <span class="report-date"><i class="ph ph-clock"></i> <span class="date-text"></span></span>
+            </div>
+        </div>
+    </template>
+
+    <script src="script.js"></script>
+</body>
+</html>
