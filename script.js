@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStats(SCAM_DATA);
 
     // Event Listeners
-    searchInput.addEventListener('input', debounce(handleSearch, 300));
-    searchBtn.addEventListener('click', handleSearch);
+    searchInput.addEventListener('input', debounce(() => handleSearch(false), 300));
+    searchBtn.addEventListener('click', () => handleSearch(true));
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
 
-            handleSearch();
+            handleSearch(false);
         });
     });
 });
@@ -150,8 +150,8 @@ function renderCards(data) {
 }
 
 // Search and Filter Logic
-function handleSearch() {
-    const searchTerm = searchInput.value.toLowerCase();
+function handleSearch(isButtonClick = false) {
+    const searchTerm = searchInput.value.trim().toLowerCase();
     const activeFilterBtn = document.querySelector('.filter-pill.active');
     const filterCategory = activeFilterBtn.dataset.filter;
 
@@ -169,6 +169,16 @@ function handleSearch() {
     });
 
     renderCards(filteredData);
+
+    // Alert logic only runs on the search button click, not on every keystroke
+    if (isButtonClick && searchTerm.length > 0) {
+        // Simple check: if there are exact matches (or close enough) based on the filtered data
+        if (filteredData.length > 0) {
+            alert('⚠️ SCAMMER NUMBER DETECTED: This number matches known scam profiles in our database. Do not engage.');
+        } else {
+            alert('✅ Not in database: We could not find a match for this number. However, still remain vigilant.');
+        }
+    }
 }
 
 // Utils

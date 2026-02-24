@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | ScamWatch GH</title>
+
+    <link rel="icon" type="image/svg+xml" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .admin-layout {
+            padding: 120px 0 80px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        /* Login Screen */
+        #loginScreen {
+            max-width: 400px;
+            margin: 80px auto;
+            text-align: center;
+        }
+
+        #loginScreen .form-control {
+            width: 100%;
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+            padding: 14px;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        /* Dashboard Screen */
+        #dashboardScreen {
+            display: none;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .img-preview {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btns button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-approve {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .btn-approve:hover {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .btn-reject {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+
+        .btn-reject:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: var(--border-radius-pill);
+            font-size: 0.8rem;
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--accent-yellow);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="ph-fill ph-shield-warning text-danger"></i>
+                <a href="index.html">
+                    <h1>Scam<span class="text-light">Watch</span> GH <span
+                            style="font-size:1rem; color:var(--text-muted)">ADMIN</span></h1>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container admin-layout">
+
+        <!-- Login Form -->
+        <div id="loginScreen" class="glass-panel" style="padding: 40px;">
+            <i class="ph-fill ph-lock-key text-accent" style="font-size: 3rem; margin-bottom: 16px;"></i>
+            <h3>Admin Restricted Area</h3>
+            <p class="text-secondary" style="margin-bottom: 24px;">Please enter the master password to review
+                submissions.</p>
+            <form id="adminLoginForm">
+                <input type="password" id="adminPassword" class="form-control" placeholder="Enter Password" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboardScreen">
+            <div class="admin-header">
+                <div>
+                    <h2>Review <span class="text-gradient">Pending Submissions</span></h2>
+                    <p class="text-secondary">Approve verified scam reports to push them to the public directory.</p>
+                </div>
+                <button class="btn btn-outline" onclick="location.reload()">Log Out</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Category</th>
+                            <th>Modus Operandi</th>
+                            <th>Evidence</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <!-- Placeholder Mock Data until Supabase is connected -->
+                        <tr>
+                            <td><strong>024 111 2222</strong></td>
+                            <td>Phishing</td>
+                            <td>
+                                <p style="font-size: 0.9rem; max-width: 200px;">Claimed my bank account was blocked and
+                                    sent a link.</p>
+                            </td>
+                            <td>
+                                <div
+                                    style="width: 80px; height: 80px; background: rgba(255,255,255,0.05); display: flex; align-items:center; justify-content:center; border: 1px dashed var(--border-light); font-size: 0.8rem; text-align: center;">
+                                    No Image (Mock)</div>
+                            </td>
+                            <td><span class="status-badge">Pending</span></td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="btn-approve"><i class="ph ph-check"></i></button>
+                                    <button class="btn-reject"><i class="ph ph-x"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        class AdminDashboard {
+            constructor() {
+                this.submissions = [];
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                // In production, this would check for existing session
+                // this.checkAuthSession();
+            }
+
+            bindEvents() {
+                document.getElementById('adminLoginForm').addEventListener('submit', (e) => this.handleLogin(e));
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+                const password = document.getElementById('adminPassword').value;
+                
+                // Simple password check (replace with proper auth)
+                const correctPassword = "scamwatch_admin_2024"; // Change this!
+                
+                if (password === correctPassword) {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('dashboardScreen').style.display = 'block';
+                    await this.loadSubmissions();
+                } else {
+                    alert('Incorrect password. Please contact the system administrator.');
+                }
+            }
+
+            async loadSubmissions() {
+                try {
+                    // In production, this would load from your backend/database
+                    // For now, we'll use mock data and localStorage for demo
+                    this.submissions = this.getMockSubmissions();
+                    this.renderSubmissions();
+                } catch (error) {
+                    console.error('Error loading submissions:', error);
+                }
+            }
+
+            getMockSubmissions() {
+                return [
+                    {
+                        id: 1,
+                        phoneNumber: '+233 24 111 2222',
+                        category: 'phishing',
+                        categoryLabel: 'Phishing Links',
+                        modusOperandi: 'Sent fake bank alert saying my account was blocked and provided a malicious link to "verify" my details.',
+                        evidence: ['data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='],
+                        reporterEmail: 'reporter@example.com',
+                        additionalInfo: 'They called from this number multiple times',
+                        status: 'pending',
+                        timestamp: new Date().toISOString()
+                    },
+                    {
+                        id: 2,
+                        phoneNumber: '050 999 8888',
+                        category: 'momo',
+                        categoryLabel: 'MTN Impersonation',
+                        modusOperandi: 'Called claiming to be from MTN and asked for my PIN to "upgrade" my account.',
+                        evidence: [],
+                        reporterEmail: '',
+                        additionalInfo: 'Very convincing, they knew my name',
+                        status: 'pending',
+                        timestamp: new Date(Date.now() - 86400000).toISOString() // Yesterday
+                    }
+                ];
+            }
+
+            renderSubmissions() {
+                const tbody = document.getElementById('adminTableBody');
+                tbody.innerHTML = '';
+
+                this.submissions.forEach(submission => {
+                    const row = this.createSubmissionRow(submission);
+                    tbody.appendChild(row);
+                });
+            }
+
+            createSubmissionRow(submission) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <strong>${submission.phoneNumber}</strong>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">
+                            ${new Date(submission.timestamp).toLocaleDateString()}
+                        </div>
+                        ${submission.reporterEmail ? `<div style="font-size: 0.75rem; color: var(--text-muted);">${submission.reporterEmail}</div>` : ''}
+                    </td>
+                    <td>
+                        <span class="category-badge">${submission.categoryLabel}</span>
+                    </td>
+                    <td>
+                        <div style="max-width: 300px;">
+                            <p style="font-size: 0.9rem; margin-bottom: 8px;">${submission.modusOperandi}</p>
+                            ${submission.additionalInfo ? `<small style="color: var(--text-muted);">Note: ${submission.additionalInfo}</small>` : ''}
+                        </div>
+                    </td>
+                    <td>
+                        ${this.renderEvidence(submission.evidence)}
+                    </td>
+                    <td>
+                        <span class="status-badge status-${submission.status}">${submission.status}</span>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-approve" onclick="adminDashboard.approveSubmission(${submission.id})" title="Approve">
+                                <i class="ph ph-check"></i>
+                            </button>
+                            <button class="btn-reject" onclick="adminDashboard.rejectSubmission(${submission.id})" title="Reject">
+                                <i class="ph ph-x"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                return tr;
+            }
+
+            renderEvidence(evidence) {
+                if (!evidence || evidence.length === 0) {
+                    return `<div style="width: 80px; height: 80px; background: rgba(255,255,255,0.05); display: flex; align-items:center; justify-content:center; border: 1px dashed var(--border-light); font-size: 0.75rem; text-align: center; border-radius: 4px;">No Evidence</div>`;
+                }
+
+                return evidence.map((img, index) => 
+                    `<img src="${img}" class="img-preview" onclick="adminDashboard.viewImage('${img}')" alt="Evidence ${index + 1}">`
+                ).join('');
+            }
+
+            async approveSubmission(id) {
+                const submission = this.submissions.find(s => s.id === id);
+                if (!submission) return;
+
+                if (confirm(`Approve scam report for ${submission.phoneNumber}?\n\nThis will add it to the public directory.`)) {
+                    try {
+                        // Add to main scam data
+                        await this.addToMainDatabase(submission);
+                        
+                        // Remove from pending
+                        this.submissions = this.submissions.filter(s => s.id !== id);
+                        this.renderSubmissions();
+                        
+                        alert('Submission approved and added to the database!');
+                    } catch (error) {
+                        alert('Error approving submission: ' + error.message);
+                    }
+                }
+            }
+
+            async rejectSubmission(id) {
+                const submission = this.submissions.find(s => s.id === id);
+                if (!submission) return;
+
+                const reason = prompt(`Reject scam report for ${submission.phoneNumber}?\n\nPlease provide a reason:`);
+                if (reason !== null) {
+                    // In production, you might want to send an email to the reporter
+                    this.submissions = this.submissions.filter(s => s.id !== id);
+                    this.renderSubmissions();
+                    alert('Submission rejected.');
+                }
+            }
+
+            async addToMainDatabase(submission) {
+                // Generate new ID
+                const newId = 's-' + String(Date.now()).slice(-3).padStart(3, '0');
+                
+                // Create new scam entry
+                const newEntry = {
+                    id: newId,
+                    number: submission.phoneNumber,
+                    category: submission.category,
+                    categoryLabel: submission.categoryLabel,
+                    modusOperandi: submission.modusOperandi,
+                    evidence: submission.evidence.length > 0 ? [submission.modusOperandi] : [],
+                    tags: this.generateTags(submission),
+                    dateReported: new Date().toISOString().split('T')[0],
+                    riskLevel: 'high'
+                };
+
+                // In production, this would update your database
+                // For now, we'll just log it and show instructions
+                console.log('New scam entry to add:', newEntry);
+                
+                // Show instructions for manual addition
+                this.showAddToCodeInstructions(newEntry);
+            }
+
+            generateTags(submission) {
+                const tags = [];
+                if (submission.category === 'momo') {
+                    tags.push('MTN', 'MoMo Fraud', 'Voice Call');
+                } else if (submission.category === 'phishing') {
+                    tags.push('SMS', 'Phishing URL');
+                    if (submission.modusOperandi.toLowerCase().includes('dvla')) {
+                        tags.push('DVLA', 'Malware');
+                    }
+                } else {
+                    tags.push('Impersonation');
+                }
+                return tags;
+            }
+
+            showAddToCodeInstructions(entry) {
+                const codeBlock = JSON.stringify(entry, null, 4);
+                const instructions = `
+APPROVED SUBMISSION - ADD TO SCRIPT.JS:
+
+Add this entry to the SCAM_DATA array in script.js:
+
+${codeBlock}
+
+Phone: ${entry.number}
+Category: ${entry.categoryLabel}
+Evidence: ${entry.evidence.length} items
+                `;
+
+                // Create a modal or show in console
+                console.log(instructions);
+                
+                // Copy to clipboard if possible
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(codeBlock).then(() => {
+                        alert('New scam entry copied to clipboard!\n\nPlease add it to the SCAM_DATA array in script.js');
+                    });
+                } else {
+                    alert('Approved! Please check the browser console for the code to add to script.js');
+                }
+            }
+
+            viewImage(src) {
+                // Simple image viewer
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+                    background: rgba(0,0,0,0.9); display: flex; align-items: center; 
+                    justify-content: center; z-index: 9999; cursor: pointer;
+                `;
+                
+                const img = document.createElement('img');
+                img.src = src;
+                img.style.cssText = 'max-width: 90vw; max-height: 90vh; border-radius: 8px;';
+                
+                modal.appendChild(img);
+                modal.addEventListener('click', () => document.body.removeChild(modal));
+                document.body.appendChild(modal);
+            }
+        }
+
+        // Initialize admin dashboard
+        const adminDashboard = new AdminDashboard();
+    </script>
+</body>
+
+</html>

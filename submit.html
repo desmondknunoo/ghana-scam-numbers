@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Scam Report | ScamWatch GH</title>
+    <meta name="description" content="Submit a scam phone number and upload evidence to the ScamWatch GH directory.">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .submit-section {
+            padding: 160px 0 80px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .submit-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .submit-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .form-control {
+            background: var(--bg-input);
+            border: 1px solid var(--border-light);
+            padding: 14px 16px;
+            border-radius: var(--border-radius-sm);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 2px var(--accent-blue-glow);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed var(--border-light);
+            border-radius: var(--border-radius-md);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .file-upload-wrapper i {
+            font-size: 3rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .file-upload-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            margin-top: 16px;
+        }
+
+        .file-preview-container {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .file-preview-item {
+            position: relative;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        .file-preview-image {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .file-preview-name {
+            padding: 8px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .file-remove-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-spinner {
+            display: none;
+            margin-left: 8px;
+        }
+
+        .loading-spinner.show {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-message, .error-message {
+            padding: 16px;
+            border-radius: var(--border-radius-sm);
+            margin-top: 16px;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgb(16, 185, 129);
+            color: rgb(16, 185, 129);
+        }
+
+        .error-message {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgb(220, 38, 38);
+            color: rgb(220, 38, 38);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-effects">
+        <div class="glow red"></div>
+        <div class="glow blue"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="ph-fill ph-shield-warning text-danger"></i>
+                <a href="index.html">
+                    <h1>Scam<span class="text-light">Watch</span> GH</h1>
+                </a>
+            </div>
+            <nav>
+                <a href="index.html" class="nav-link">Directory</a>
+                <a href="report.html" class="btn btn-outline"><i class="ph-fill ph-warning"></i> Official Hub</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="submit-section">
+            <div class="submit-header">
+                <h2>Submit a <span class="text-danger">Scam Report</span></h2>
+                <p>Help protect the community. All submissions are peer-reviewed before being added to the public
+                    directory.</p>
+            </div>
+
+            <form id="scamForm" class="glass-panel" style="padding: 40px;" name="scam-report" netlify>
+                <div class="form-group">
+                    <label class="form-label" for="scamNumber">Phone Number</label>
+                    <input type="text" id="scamNumber" class="form-control" placeholder="e.g., 024 XXX XXXX" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="scamCategory">Category</label>
+                    <select id="scamCategory" class="form-control" required style="appearance: none;">
+                        <option value="" disabled selected>Select the type of fraud</option>
+                        <option value="momo">Mobile Money (MoMo) Impersonation</option>
+                        <option value="phishing">Phishing Links (Fake DVLA, URLs)</option>
+                        <option value="impersonation">Other Impersonation</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="modusOperandi">Modus Operandi (How did they operate?)</label>
+                    <textarea id="modusOperandi" class="form-control"
+                        placeholder="Describe what the scammer said or texted you..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Evidence (Required)</label>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Upload screenshots of
+                        SMS, WhatsApp, or Call Logs to verify your claim. Max 5MB per file.</p>
+                    <div class="file-upload-wrapper" id="fileUploadWrapper">
+                        <i class="ph-fill ph-upload-simple"></i>
+                        <p id="fileNameDisplay">Drag & Drop or Click to Upload Images</p>
+                        <input type="file" id="evidenceFile" class="file-upload-input"
+                            accept="image/png, image/jpeg, image/jpg, image/webp" multiple required>
+                    </div>
+                    <div id="filePreview" class="file-preview-container"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="reporterEmail">Your Email (Optional)</label>
+                    <input type="email" id="reporterEmail" class="form-control" 
+                        placeholder="For updates on your submission (optional)">
+                    <small style="color: var(--text-muted); font-size: 0.8rem;">We'll only use this to notify you about your submission status</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="additionalInfo">Additional Information (Optional)</label>
+                    <textarea id="additionalInfo" class="form-control" 
+                        placeholder="Any other relevant details about the scam attempt..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
+                    <i class="ph-fill ph-paper-plane-right"></i> Submit for Review
+                    <i class="ph ph-spinner loading-spinner" id="loadingSpinner"></i>
+                </button>
+
+                <div class="success-message" id="successMessage">
+                    <i class="ph-fill ph-check-circle"></i> 
+                    <strong>Submission Successful!</strong> Your report has been received and will be reviewed within 24-48 hours.
+                </div>
+
+                <div class="error-message" id="errorMessage">
+                    <i class="ph-fill ph-warning-circle"></i> 
+                    <strong>Submission Failed:</strong> <span id="errorText">Please try again later.</span>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        class ScamReportSubmitter {
+            constructor() {
+                this.selectedFiles = [];
+                this.maxFileSize = 5 * 1024 * 1024; // 5MB
+                this.maxFiles = 5;
+                this.init();
+            }
+
+            init() {
+                this.fileInput = document.getElementById('evidenceFile');
+                this.fileNameDisplay = document.getElementById('fileNameDisplay');
+                this.filePreview = document.getElementById('filePreview');
+                this.form = document.getElementById('scamForm');
+                this.submitBtn = document.getElementById('submitBtn');
+                this.loadingSpinner = document.getElementById('loadingSpinner');
+                this.successMessage = document.getElementById('successMessage');
+                this.errorMessage = document.getElementById('errorMessage');
+                this.errorText = document.getElementById('errorText');
+
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                // File input handling
+                this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
+                
+                // Drag and drop
+                const wrapper = document.getElementById('fileUploadWrapper');
+                wrapper.addEventListener('dragover', (e) => this.handleDragOver(e));
+                wrapper.addEventListener('drop', (e) => this.handleDrop(e));
+
+                // Form submission
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            }
+
+            handleFileSelect(e) {
+                const files = Array.from(e.target.files);
+                this.processFiles(files);
+            }
+
+            handleDragOver(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            handleDrop(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const files = Array.from(e.dataTransfer.files);
+                this.processFiles(files);
+            }
+
+            processFiles(files) {
+                files.forEach(file => {
+                    if (this.selectedFiles.length >= this.maxFiles) {
+                        this.showError(`Maximum ${this.maxFiles} files allowed`);
+                        return;
+                    }
+
+                    if (file.size > this.maxFileSize) {
+                        this.showError(`File ${file.name} is too large. Maximum size is 5MB.`);
+                        return;
+                    }
+
+                    if (!file.type.startsWith('image/')) {
+                        this.showError(`File ${file.name} is not an image.`);
+                        return;
+                    }
+
+                    this.selectedFiles.push(file);
+                    this.addFilePreview(file);
+                });
+
+                this.updateFileDisplay();
+            }
+
+            addFilePreview(file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'file-preview-item';
+                    previewItem.innerHTML = `
+                        <img src="${e.target.result}" alt="${file.name}" class="file-preview-image">
+                        <div class="file-preview-name">${file.name}</div>
+                        <button type="button" class="file-remove-btn" data-filename="${file.name}">×</button>
+                    `;
+
+                    previewItem.querySelector('.file-remove-btn').addEventListener('click', () => {
+                        this.removeFile(file.name);
+                        previewItem.remove();
+                        this.updateFileDisplay();
+                    });
+
+                    this.filePreview.appendChild(previewItem);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            removeFile(filename) {
+                this.selectedFiles = this.selectedFiles.filter(file => file.name !== filename);
+            }
+
+            updateFileDisplay() {
+                if (this.selectedFiles.length > 0) {
+                    this.fileNameDisplay.textContent = `${this.selectedFiles.length} file(s) selected`;
+                    this.fileNameDisplay.style.color = 'var(--text-primary)';
+                } else {
+                    this.fileNameDisplay.textContent = 'Drag & Drop or Click to Upload Images';
+                    this.fileNameDisplay.style.color = '';
+                }
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                if (this.selectedFiles.length === 0) {
+                    this.showError('Please upload at least one evidence image.');
+                    return;
+                }
+
+                this.showLoading(true);
+                this.hideMessages();
+
+                try {
+                    const formData = new FormData();
+                    
+                    // Add form fields
+                    formData.append('phoneNumber', document.getElementById('scamNumber').value);
+                    formData.append('category', document.getElementById('scamCategory').value);
+                    formData.append('modusOperandi', document.getElementById('modusOperandi').value);
+                    formData.append('reporterEmail', document.getElementById('reporterEmail').value);
+                    formData.append('additionalInfo', document.getElementById('additionalInfo').value);
+                    formData.append('timestamp', new Date().toISOString());
+
+                    // Add files
+                    this.selectedFiles.forEach((file, index) => {
+                        formData.append(`evidence_${index}`, file);
+                    });
+
+                    // Submit to backend (you'll need to configure this)
+                    await this.submitToBackend(formData);
+                    
+                    this.showSuccess();
+                    this.resetForm();
+
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    this.showError(error.message || 'Failed to submit report. Please try again.');
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            async submitToBackend(formData) {
+                // Option 1: Netlify Forms (Free tier: 100 submissions/month)
+                if (window.location.hostname.includes('netlify')) {
+                    return this.submitToNetlify(formData);
+                }
+                
+                // Option 2: Formspree (Free tier: 50 submissions/month)
+                return this.submitToFormspree(formData);
+                
+                // Option 3: EmailJS (Free tier: 200 emails/month) 
+                // return this.submitToEmailJS(formData);
+            }
+
+            async submitToNetlify(formData) {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        'form-name': 'scam-report',
+                        ...Object.fromEntries(formData)
+                    }).toString()
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+            }
+
+            async submitToFormspree(formData) {
+                // You'll need to replace 'YOUR_FORM_ID' with your actual Formspree form ID
+                const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to submit to Formspree');
+                }
+            }
+
+            showLoading(show) {
+                if (show) {
+                    this.loadingSpinner.classList.add('show');
+                    this.submitBtn.disabled = true;
+                } else {
+                    this.loadingSpinner.classList.remove('show');
+                    this.submitBtn.disabled = false;
+                }
+            }
+
+            showSuccess() {
+                this.successMessage.style.display = 'block';
+                this.successMessage.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            showError(message) {
+                this.errorText.textContent = message;
+                this.errorMessage.style.display = 'block';
+                this.errorMessage.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            hideMessages() {
+                this.successMessage.style.display = 'none';
+                this.errorMessage.style.display = 'none';
+            }
+
+            resetForm() {
+                this.form.reset();
+                this.selectedFiles = [];
+                this.filePreview.innerHTML = '';
+                this.updateFileDisplay();
+            }
+        }
+
+        // Initialize the submitter when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ScamReportSubmitter();
+        });
+    </script>
+</body>
+
+</html>

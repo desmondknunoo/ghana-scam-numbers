@@ -1,0 +1,30 @@
+{
+  "name": "ghana-scam-numbers",
+  "version": "1.0.0",
+  "description": "A directory of phone numbers used for scams in Ghana",
+  "main": "script.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required for static site'",
+    "start": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "@octokit/rest": "^20.0.2",
+    "cloudinary": "^1.41.0",
+    "formidable": "^3.5.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "scam",
+    "ghana",
+    "phone-numbers",
+    "fraud",
+    "directory"
+  ],
+  "author": "Desmond Knunoo",
+  "license": "MIT"
+}
