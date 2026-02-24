@@ -7,10 +7,10 @@ const SCAM_DATA = [
         id: 's-001',
         number: '053 489 2836',
         category: 'momo',
-        categoryLabel: 'MTN / Telecel Impersonation',
-        modusOperandi: 'They call and impersonate MTN Ghana or Telecel offices to perform social engineering. The goal is to trick you into revealing personal info and your Mobile Money PIN.',
+        categoryLabel: 'MTN Impersonation',
+        modusOperandi: 'They call and impersonate MTN Ghana offices to perform social engineering. The goal is to trick you into revealing personal info and your Mobile Money PIN.',
         evidence: [],
-        tags: ['MTN', 'Telecel', 'MoMo Fraud', 'Voice Call'],
+        tags: ['MTN', 'MoMo Fraud', 'Voice Call'],
         dateReported: '2024-02-24', // using today's simulated date for recency
         riskLevel: 'high'
     },
@@ -68,7 +68,7 @@ const totalNumbersSpan = document.getElementById('totalNumbers');
 document.addEventListener('DOMContentLoaded', () => {
     // Set Current Year in Footer
     document.getElementById('currentYear').textContent = new Date().getFullYear();
-    
+
     // Initial Render
     renderCards(SCAM_DATA);
     updateStats(SCAM_DATA);
@@ -76,13 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event Listeners
     searchInput.addEventListener('input', debounce(handleSearch, 300));
     searchBtn.addEventListener('click', handleSearch);
-    
+
     filterBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             // Update active state
             filterBtns.forEach(b => b.classList.remove('active'));
             e.target.classList.add('active');
-            
+
             handleSearch();
         });
     });
@@ -91,31 +91,31 @@ document.addEventListener('DOMContentLoaded', () => {
 // Render logic
 function renderCards(data) {
     gridContainer.innerHTML = '';
-    
+
     if (data.length === 0) {
         noResultsDiv.classList.remove('hidden');
         return;
     }
-    
+
     noResultsDiv.classList.add('hidden');
-    
+
     data.forEach(item => {
         const clone = cardTemplate.content.cloneNode(true);
         const cardNode = clone.querySelector('.scam-card');
-        
+
         cardNode.dataset.category = item.category;
-        
+
         clone.querySelector('.category-badge').textContent = item.categoryLabel;
         clone.querySelector('.phone-number').textContent = item.number;
         clone.querySelector('.mo-text').textContent = item.modusOperandi;
         clone.querySelector('.date-text').textContent = formatDate(item.dateReported);
-        
+
         // Handle Evidence
         if (item.evidence && item.evidence.length > 0) {
             const evidenceSection = clone.querySelector('.evidence-section');
             const evidenceList = clone.querySelector('.evidence-list');
             evidenceSection.classList.remove('hidden');
-            
+
             item.evidence.forEach(ev => {
                 const li = document.createElement('li');
                 li.className = 'evidence-item';
@@ -123,7 +123,7 @@ function renderCards(data) {
                 evidenceList.appendChild(li);
             });
         }
-        
+
         // Handle Tags
         const tagsContainer = clone.querySelector('.target-tags');
         item.tags.forEach(tag => {
@@ -132,7 +132,7 @@ function renderCards(data) {
             span.textContent = tag;
             tagsContainer.appendChild(span);
         });
-        
+
         // Setup Copy Button
         const copyBtn = clone.querySelector('.copy-btn');
         copyBtn.addEventListener('click', () => {
@@ -144,7 +144,7 @@ function renderCards(data) {
                 }, 2000);
             });
         });
-        
+
         gridContainer.appendChild(clone);
     });
 }
@@ -159,11 +159,11 @@ function handleSearch() {
         // Match Search
         const searchString = `${item.number} ${item.categoryLabel} ${item.modusOperandi} ${item.tags.join(' ')}`.toLowerCase();
         const matchesSearch = searchString.includes(searchTerm);
-        
+
         // Match Category
-        const matchesCategory = filterCategory === 'all' || 
-                                (filterCategory === 'impersonation' && (item.category === 'momo' || item.category === 'phishing')) ||
-                                item.category === filterCategory;
+        const matchesCategory = filterCategory === 'all' ||
+            (filterCategory === 'impersonation' && (item.category === 'momo' || item.category === 'phishing')) ||
+            item.category === filterCategory;
 
         return matchesSearch && matchesCategory;
     });
@@ -177,7 +177,7 @@ function updateStats(data) {
     let count = 0;
     const target = data.length;
     const interval = setInterval(() => {
-        if(count >= target) {
+        if (count >= target) {
             clearInterval(interval);
             totalNumbersSpan.textContent = target;
         } else {
