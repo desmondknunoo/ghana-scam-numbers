@@ -685,12 +685,59 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ============== Responsive ============== */
 @media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .navbar {
+        padding: 16px 0;
+    }
+    
+    .navbar .container {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .navbar nav {
+        display: flex !important;
+        width: 100%;
+        justify-content: center;
+        gap: 12px !important;
+    }
+
+    .navbar .nav-link {
+        display: none;
+    }
+
+    .navbar .btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .logo h1 {
+        font-size: 1.25rem;
+    }
+    
+    .logo i {
+        font-size: 1.5rem;
+    }
+
+    /* Provide a mobile-specific action bar if needed, or just let users scroll */
+
     .hero {
-        padding: 140px 0 60px;
+        padding: 120px 0 60px;
+        min-height: auto;
     }
     
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
+        line-height: 1.1;
+        margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        margin-bottom: 32px;
     }
     
     .search-container {
@@ -699,6 +746,7 @@ h1, h2, h3, h4, h5, h6 {
         border: none;
         box-shadow: none;
         gap: 12px;
+        margin-bottom: 24px;
     }
     
     .search-container.glass-panel {
@@ -713,25 +761,96 @@ h1, h2, h3, h4, h5, h6 {
         width: 100%;
         background: var(--bg-card);
         border: 1px solid var(--border-light);
-        padding: 16px;
+        padding: 14px 16px;
         border-radius: var(--border-radius-pill);
         backdrop-filter: var(--blur-medium);
+        font-size: 1rem;
     }
     
     .search-container .btn {
         width: 100%;
+        padding: 14px 24px;
+    }
+
+    .quick-filters {
+        gap: 8px;
+    }
+
+    .filter-pill {
+        padding: 6px 12px;
+        font-size: 0.8rem;
     }
     
+    .stats-bar {
+        padding: 24px 0;
+        margin-bottom: 40px;
+    }
+
     .stats-grid {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 20px;
+    }
+
+    .stat-item {
+        gap: 8px;
+    }
+
+    .stat-item i {
+        font-size: 2rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .section-header h3 {
+        font-size: 1.5rem;
     }
     
+    .footer {
+        padding: 40px 0 20px;
+    }
+
     .footer-content {
         flex-direction: column;
+        gap: 32px;
+        margin-bottom: 24px;
     }
     
     .scam-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .scam-card {
+        padding: 20px;
+        gap: 16px;
+    }
+
+    .phone-number {
+        font-size: 1.5rem;
+    }
+
+    .no-results {
+        padding: 40px 0;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    
+    .badge-alert {
+        font-size: 0.75rem;
+        padding: 4px 12px;
     }
 }
