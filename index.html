@@ -37,7 +37,10 @@
             </div>
             <nav>
                 <a href="#directory" class="nav-link">Directory</a>
-                <a href="report.html" class="btn btn-primary">
+                <a href="submit.html" class="btn btn-primary">
+                    <i class="ph-fill ph-plus"></i> Submit Report
+                </a>
+                <a href="report.html" class="btn btn-outline">
                     <i class="ph-fill ph-warning"></i> Report Fraud
                 </a>
                 <a href="https://github.com/desmondknunoo/ghana-scam-numbers" target="_blank" rel="noopener noreferrer"
@@ -157,6 +160,16 @@
             </div>
         </div>
     </footer>
+
+    <!-- Custom Alert Modal (Hidden by default) -->
+    <div id="customAlert" class="custom-alert hidden">
+        <div class="custom-alert-content glass-panel">
+            <button id="closeAlertBtn" class="close-alert"><i class="ph ph-x"></i></button>
+            <div id="alertIcon" class="alert-icon"></div>
+            <h3 id="alertTitle"></h3>
+            <p id="alertMessage" class="text-secondary"></p>
+        </div>
+    </div>
 
     <!-- Template for a Scam Card (Hidden) -->
     <template id="scamCardTemplate">

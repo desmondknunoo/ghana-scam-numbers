@@ -64,6 +64,13 @@ const filterBtns = document.querySelectorAll('.filter-pill');
 const noResultsDiv = document.getElementById('noResults');
 const totalNumbersSpan = document.getElementById('totalNumbers');
 
+// Custom Alert DOM
+const customAlert = document.getElementById('customAlert');
+const closeAlertBtn = document.getElementById('closeAlertBtn');
+const alertIcon = document.getElementById('alertIcon');
+const alertTitle = document.getElementById('alertTitle');
+const alertMessage = document.getElementById('alertMessage');
+
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
     // Set Current Year in Footer
@@ -85,6 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             handleSearch(false);
         });
+    });
+
+    closeAlertBtn.addEventListener('click', hideCustomAlert);
+
+    customAlert.addEventListener('click', (e) => {
+        if (e.target === customAlert) {
+            hideCustomAlert();
+        }
     });
 });
 
@@ -174,11 +189,42 @@ function handleSearch(isButtonClick = false) {
     if (isButtonClick && searchTerm.length > 0) {
         // Simple check: if there are exact matches (or close enough) based on the filtered data
         if (filteredData.length > 0) {
-            alert('⚠️ SCAMMER NUMBER DETECTED: This number matches known scam profiles in our database. Do not engage.');
+            showCustomAlert('danger', 'SCAMMER DETECTED', 'This number matches known scam profiles in our database. Do not engage.');
         } else {
-            alert('✅ Not in database: We could not find a match for this number. However, still remain vigilant.');
+            showCustomAlert('success', 'Not in Database', 'We could not find a match for this number. However, you should still remain vigilant.');
         }
     }
+}
+
+// Custom Alert Logic
+function showCustomAlert(type, title, message) {
+    if (type === 'danger') {
+        alertIcon.innerHTML = '<i class="ph-fill ph-warning-circle"></i>';
+        alertIcon.className = 'alert-icon danger';
+        alertTitle.className = 'text-danger';
+        alertTitle.style.color = '';
+    } else {
+        alertIcon.innerHTML = '<i class="ph-fill ph-check-circle"></i>';
+        alertIcon.className = 'alert-icon success';
+        alertTitle.style.color = '#10b981';
+        alertTitle.className = '';
+    }
+
+    alertTitle.textContent = title;
+    alertMessage.textContent = message;
+
+    customAlert.classList.remove('hidden');
+    // small delay to allow display block to process before opacity
+    setTimeout(() => {
+        customAlert.classList.add('show');
+    }, 10);
+}
+
+function hideCustomAlert() {
+    customAlert.classList.remove('show');
+    setTimeout(() => {
+        customAlert.classList.add('hidden');
+    }, 300); // match transition time
 }
 
 // Utils

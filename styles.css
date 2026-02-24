@@ -683,6 +683,75 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.9rem;
 }
 
+/* ============== Custom Alert Modal ============== */
+.custom-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 11, 16, 0.8);
+    backdrop-filter: var(--blur-medium);
+    -webkit-backdrop-filter: var(--blur-medium);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+}
+
+.custom-alert.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.custom-alert-content {
+    position: relative;
+    width: 90%;
+    max-width: 450px;
+    padding: 40px 32px;
+    text-align: center;
+    transform: translateY(20px) scale(0.95);
+    transition: transform var(--transition-normal);
+}
+
+.custom-alert.show .custom-alert-content {
+    transform: translateY(0) scale(1);
+}
+
+.close-alert {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    transition: var(--transition-fast);
+}
+
+.close-alert:hover {
+    color: var(--text-primary);
+}
+
+.alert-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+}
+
+.alert-icon.danger {
+    color: var(--accent-red);
+}
+
+.alert-icon.success {
+    color: #10b981;
+}
+
+#alertTitle {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
 /* ============== Responsive ============== */
 @media (max-width: 768px) {
     .container {

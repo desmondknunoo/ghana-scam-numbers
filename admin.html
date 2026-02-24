@@ -235,6 +235,7 @@
                 const correctPassword = "scamwatch_admin_2024"; // Change this!
                 
                 if (password === correctPassword) {
+                    this.authToken = correctPassword; // Store auth token
                     document.getElementById('loginScreen').style.display = 'none';
                     document.getElementById('dashboardScreen').style.display = 'block';
                     await this.loadSubmissions();
@@ -245,12 +246,24 @@
 
             async loadSubmissions() {
                 try {
-                    // In production, this would load from your backend/database
-                    // For now, we'll use mock data and localStorage for demo
-                    this.submissions = this.getMockSubmissions();
+                    const response = await fetch('/api/admin/get-submissions', {
+                        headers: {
+                            'Authorization': `Bearer ${this.authToken}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to load submissions');
+                    }
+
+                    const result = await response.json();
+                    this.submissions = result.submissions || [];
                     this.renderSubmissions();
                 } catch (error) {
                     console.error('Error loading submissions:', error);
+                    // Fall back to mock data for demo
+                    this.submissions = this.getMockSubmissions();
+                    this.renderSubmissions();
                 }
             }
 
@@ -349,10 +362,25 @@
 
                 if (confirm(`Approve scam report for ${submission.phoneNumber}?\n\nThis will add it to the public directory.`)) {
                     try {
-                        // Add to main scam data
-                        await this.addToMainDatabase(submission);
+                        const response = await fetch('/api/admin/approve-submission', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${this.authToken}`
+                            },
+                            body: JSON.stringify({
+                                submissionId: id,
+                                action: 'approve'
+                            })
+                        });
+
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(result.error);
+                        }
                         
-                        // Remove from pending
+                        // Remove from pending submissions
                         this.submissions = this.submissions.filter(s => s.id !== id);
                         this.renderSubmissions();
                         
@@ -369,10 +397,32 @@
 
                 const reason = prompt(`Reject scam report for ${submission.phoneNumber}?\n\nPlease provide a reason:`);
                 if (reason !== null) {
-                    // In production, you might want to send an email to the reporter
-                    this.submissions = this.submissions.filter(s => s.id !== id);
-                    this.renderSubmissions();
-                    alert('Submission rejected.');
+                    try {
+                        const response = await fetch('/api/admin/approve-submission', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${this.authToken}`
+                            },
+                            body: JSON.stringify({
+                                submissionId: id,
+                                action: 'reject',
+                                reason: reason
+                            })
+                        });
+
+                        const result = await response.json();
+
+                        if (!response.ok) {
+                            throw new Error(result.error);
+                        }
+
+                        this.submissions = this.submissions.filter(s => s.id !== id);
+                        this.renderSubmissions();
+                        alert('Submission rejected.');
+                    } catch (error) {
+                        alert('Error rejecting submission: ' + error.message);
+                    }
                 }
             }
 
