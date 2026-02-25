@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | ScamWatch GH</title>
+    <meta name="robots" content="noindex, nofollow">
 
-    <link rel="icon" type="image/svg+xml" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -230,10 +231,10 @@
             async handleLogin(e) {
                 e.preventDefault();
                 const password = document.getElementById('adminPassword').value;
-                
+
                 // Simple password check (replace with proper auth)
                 const correctPassword = "scamwatch_admin_2024"; // Change this!
-                
+
                 if (password === correctPassword) {
                     this.authToken = correctPassword; // Store auth token
                     document.getElementById('loginScreen').style.display = 'none';
@@ -342,7 +343,7 @@
                         </div>
                     </td>
                 `;
-                
+
                 return tr;
             }
 
@@ -351,7 +352,7 @@
                     return `<div style="width: 80px; height: 80px; background: rgba(255,255,255,0.05); display: flex; align-items:center; justify-content:center; border: 1px dashed var(--border-light); font-size: 0.75rem; text-align: center; border-radius: 4px;">No Evidence</div>`;
                 }
 
-                return evidence.map((img, index) => 
+                return evidence.map((img, index) =>
                     `<img src="${img}" class="img-preview" onclick="adminDashboard.viewImage('${img}')" alt="Evidence ${index + 1}">`
                 ).join('');
             }
@@ -379,11 +380,11 @@
                         if (!response.ok) {
                             throw new Error(result.error);
                         }
-                        
+
                         // Remove from pending submissions
                         this.submissions = this.submissions.filter(s => s.id !== id);
                         this.renderSubmissions();
-                        
+
                         alert('Submission approved and added to the database!');
                     } catch (error) {
                         alert('Error approving submission: ' + error.message);
@@ -429,7 +430,7 @@
             async addToMainDatabase(submission) {
                 // Generate new ID
                 const newId = 's-' + String(Date.now()).slice(-3).padStart(3, '0');
-                
+
                 // Create new scam entry
                 const newEntry = {
                     id: newId,
@@ -446,7 +447,7 @@
                 // In production, this would update your database
                 // For now, we'll just log it and show instructions
                 console.log('New scam entry to add:', newEntry);
-                
+
                 // Show instructions for manual addition
                 this.showAddToCodeInstructions(newEntry);
             }
@@ -482,7 +483,7 @@ Evidence: ${entry.evidence.length} items
 
                 // Create a modal or show in console
                 console.log(instructions);
-                
+
                 // Copy to clipboard if possible
                 if (navigator.clipboard) {
                     navigator.clipboard.writeText(codeBlock).then(() => {
@@ -501,11 +502,11 @@ Evidence: ${entry.evidence.length} items
                     background: rgba(0,0,0,0.9); display: flex; align-items: center; 
                     justify-content: center; z-index: 9999; cursor: pointer;
                 `;
-                
+
                 const img = document.createElement('img');
                 img.src = src;
                 img.style.cssText = 'max-width: 90vw; max-height: 90vh; border-radius: 8px;';
-                
+
                 modal.appendChild(img);
                 modal.addEventListener('click', () => document.body.removeChild(modal));
                 document.body.appendChild(modal);

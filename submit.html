@@ -7,7 +7,18 @@
     <title>Submit a Scam Report | ScamWatch GH</title>
     <meta name="description" content="Submit a scam phone number and upload evidence to the ScamWatch GH directory.">
 
-    <link rel="icon" type="image/svg+xml" href="favicon.ico">
+    <!-- SEO and Social Media Meta Tags -->
+    <meta property="og:title" content="Submit a Scam Report | ScamWatch GH">
+    <meta property="og:description"
+        content="Submit a scam phone number and upload evidence to the ScamWatch GH directory.">
+    <meta property="og:url" content="https://ghana-scam-numbers.vercel.app/submit.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Submit a Scam Report | ScamWatch GH">
+    <meta name="twitter:description"
+        content="Submit a scam phone number and upload evidence to the ScamWatch GH directory.">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -163,11 +174,17 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
-        .success-message, .error-message {
+        .success-message,
+        .error-message {
             padding: 16px;
             border-radius: var(--border-radius-sm);
             margin-top: 16px;
@@ -254,14 +271,15 @@
 
                 <div class="form-group">
                     <label class="form-label" for="reporterEmail">Your Email (Optional)</label>
-                    <input type="email" id="reporterEmail" class="form-control" 
+                    <input type="email" id="reporterEmail" class="form-control"
                         placeholder="For updates on your submission (optional)">
-                    <small style="color: var(--text-muted); font-size: 0.8rem;">We'll only use this to notify you about your submission status</small>
+                    <small style="color: var(--text-muted); font-size: 0.8rem;">We'll only use this to notify you about
+                        your submission status</small>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="additionalInfo">Additional Information (Optional)</label>
-                    <textarea id="additionalInfo" class="form-control" 
+                    <textarea id="additionalInfo" class="form-control"
                         placeholder="Any other relevant details about the scam attempt..."></textarea>
                 </div>
 
@@ -271,12 +289,13 @@
                 </button>
 
                 <div class="success-message" id="successMessage">
-                    <i class="ph-fill ph-check-circle"></i> 
-                    <strong>Submission Successful!</strong> Your report has been received and will be reviewed within 24-48 hours.
+                    <i class="ph-fill ph-check-circle"></i>
+                    <strong>Submission Successful!</strong> Your report has been received and will be reviewed within
+                    24-48 hours.
                 </div>
 
                 <div class="error-message" id="errorMessage">
-                    <i class="ph-fill ph-warning-circle"></i> 
+                    <i class="ph-fill ph-warning-circle"></i>
                     <strong>Submission Failed:</strong> <span id="errorText">Please try again later.</span>
                 </div>
             </form>
@@ -309,7 +328,7 @@
             bindEvents() {
                 // File input handling
                 this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e));
-                
+
                 // Drag and drop
                 const wrapper = document.getElementById('fileUploadWrapper');
                 wrapper.addEventListener('dragover', (e) => this.handleDragOver(e));
@@ -398,7 +417,7 @@
 
             async handleSubmit(e) {
                 e.preventDefault();
-                
+
                 if (this.selectedFiles.length === 0) {
                     this.showError('Please upload at least one evidence image.');
                     return;
@@ -409,7 +428,7 @@
 
                 try {
                     const formData = new FormData();
-                    
+
                     // Add form fields
                     formData.append('phoneNumber', document.getElementById('scamNumber').value);
                     formData.append('category', document.getElementById('scamCategory').value);
@@ -425,7 +444,7 @@
 
                     // Submit to backend (you'll need to configure this)
                     await this.submitToBackend(formData);
-                    
+
                     this.showSuccess();
                     this.resetForm();
 

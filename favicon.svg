@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <path d="M50 5 L10 20 L10 50 C10 75 30 90 50 95 C70 90 90 75 90 50 L90 20 Z" fill="#ef4444"/>
+  <path d="M50 15 L20 28 L20 50 C20 70 35 82 50 86 C65 82 80 70 80 50 L80 28 Z" fill="#1e3a8a"/>
+  <!-- Magnifying glass / Alert hybrid -->
+  <circle cx="45" cy="45" r="12" stroke="white" stroke-width="6" fill="none"/>
+  <path d="M54 54 L68 68" stroke="white" stroke-width="8" stroke-linecap="round"/>
+</svg>
